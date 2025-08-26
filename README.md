@@ -1,5 +1,5 @@
 # Sekara
-![Logo](public\brandIcon.png)
+![Logo](public/brandIcon.png)
 
 Applicazione SaaS per testare Next.js App Router, Postgres, TypeScript, React, Tailwind \& Clerk.
 
