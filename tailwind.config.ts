@@ -2,37 +2,86 @@ import type { Config } from "tailwindcss"
 import { fontFamily } from "tailwindcss/defaultTheme"
 
 const config: Config = {
-  content: [
+    darkMode: ["class"],
+    content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {
-      fontFamily: {
-        heading: ["var(--font-heading)", ...fontFamily.sans],
-      },
-      colors: {
-        brand: {
-            "25":  "#F6FEF9",
-            "50":  "#ECFDF3",
-            "100": "#D1FADF",
-            "200": "#A6F4C5",
-            "300": "#6CE9A6",
-            "400": "#32D583",
-            "500": "#12B76A",
-            "600": "#039855",
-            "700": "#027A48",
-            "800": "#05603A",
-            "900": "#054F31",
-            "950": "#022C1A",
-        },
-        "discord-gray": "#2F3136",
-        "discord-text": "#E3E5E8",
-        "discord-timestamp": "#7F8C87",
-      },
-    },
+  	extend: {
+  		fontFamily: {
+  			heading: [
+  				'var(--font-heading)',
+                    ...fontFamily.sans
+                ]
+  		},
+  		colors: {
+  			brand: {
+  				'25': '#F6FEF9',
+  				'50': '#ECFDF3',
+  				'100': '#D1FADF',
+  				'200': '#A6F4C5',
+  				'300': '#6CE9A6',
+  				'400': '#32D583',
+  				'500': '#12B76A',
+  				'600': '#039855',
+  				'700': '#027A48',
+  				'800': '#05603A',
+  				'900': '#054F31',
+  				'950': '#022C1A'
+  			},
+  			'discord-gray': '#2F3136',
+  			'discord-text': '#E3E5E8',
+  			'discord-timestamp': '#7F8C87',
+  			background: 'hsl(var(--background))',
+  			foreground: 'hsl(var(--foreground))',
+  			card: {
+  				DEFAULT: 'hsl(var(--card))',
+  				foreground: 'hsl(var(--card-foreground))'
+  			},
+  			popover: {
+  				DEFAULT: 'hsl(var(--popover))',
+  				foreground: 'hsl(var(--popover-foreground))'
+  			},
+  			primary: {
+  				DEFAULT: 'hsl(var(--primary))',
+  				foreground: 'hsl(var(--primary-foreground))'
+  			},
+  			secondary: {
+  				DEFAULT: 'hsl(var(--secondary))',
+  				foreground: 'hsl(var(--secondary-foreground))'
+  			},
+  			muted: {
+  				DEFAULT: 'hsl(var(--muted))',
+  				foreground: 'hsl(var(--muted-foreground))'
+  			},
+  			accent: {
+  				DEFAULT: 'hsl(var(--accent))',
+  				foreground: 'hsl(var(--accent-foreground))'
+  			},
+  			destructive: {
+  				DEFAULT: 'hsl(var(--destructive))',
+  				foreground: 'hsl(var(--destructive-foreground))'
+  			},
+  			border: 'hsl(var(--border))',
+  			input: 'hsl(var(--input))',
+  			ring: 'hsl(var(--ring))',
+  			chart: {
+  				'1': 'hsl(var(--chart-1))',
+  				'2': 'hsl(var(--chart-2))',
+  				'3': 'hsl(var(--chart-3))',
+  				'4': 'hsl(var(--chart-4))',
+  				'5': 'hsl(var(--chart-5))'
+  			}
+  		},
+  		borderRadius: {
+  			lg: 'var(--radius)',
+  			md: 'calc(var(--radius) - 2px)',
+  			sm: 'calc(var(--radius) - 4px)'
+  		}
+  	}
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate")],
 }
 export default config

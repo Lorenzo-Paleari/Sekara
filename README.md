@@ -9,17 +9,20 @@ Ma lo scopo potrebbe cambiare nello sviluppo.
 
 Informazioni developer:
 
-se riscontri problemi col terminale di VS prova ad usare cmd invece di powershell
+    se riscontri problemi col terminale di VS prova ad usare cmd invece di powershell
 
-invece di storybook per questo progetto usiamo: 
-npm run dev 
-alla porta: http://localhost:3000
+    invece di storybook per questo progetto usiamo: 
+    npm run dev 
+    alla porta: http://localhost:3000
+
+informazioni per me:
+    @ per l'absolute path
 
 
 
 
 
 Idee personalizzazione: 
-WhatsApp
-grafici, tempi medi...
+    WhatsApp
+    grafici, tempi medi...
 
