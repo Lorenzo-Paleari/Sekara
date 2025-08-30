@@ -3,9 +3,7 @@
 
 Applicazione SaaS per testare Next.js App Router, Postgres, TypeScript, React, Tailwind \& Clerk.
 
-Per ora l'idea è creare un cron job per monitorare processi ricorrenti, per scoprire errori o tenere traccia di azioni eseguite.
-
-Ma lo scopo potrebbe cambiare nello sviluppo.
+ l'idea è creare un cron job per monitorare processi ricorrenti, per scoprire errori o tenere traccia di azioni eseguite.
 
 
 Informazioni developer:
@@ -22,12 +20,6 @@ informazioni per me:
 
     const Page = () => ... //crea l'oggetto React
     export default Page  //dichiari che quando importi questo file, stai importando l'oggetto Page
-
-
-Idee personalizzazione: 
-    WhatsApp
-    grafici, tempi medi...
-
 
 Cose da fare:
     controllare per diverse dimensioni di finestra
