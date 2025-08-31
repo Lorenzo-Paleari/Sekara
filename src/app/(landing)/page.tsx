@@ -248,9 +248,9 @@ const Page = () => {
                   </p>
                 </div>
 
-                {/* Box codice */}
+                {/* Box codice - FIX: inset + padding */}
                 <div className="relative min-h-[30rem] w-full grow">
-                  <div className="absolute bottom-0 left-10 right-0 top-10 overflow-hidden rounded-tl-xl bg-gray-900 shadow-2xl">
+                  <div className="absolute inset-6 sm:inset-8 lg:inset-10 overflow-hidden rounded-tl-xl bg-gray-900 shadow-2xl p-6">
                     <div className="flex bg-gray-800/40 ring-1 ring-white/5">
                       <div className="-mb-px flex text-sm/6 font-medium text-gray-400">
                         <div className="border-b border-r border-b-white/20 border-r-white/10 bg-white/5 px-4 py-2 text-white">
@@ -268,8 +268,8 @@ const Page = () => {
                             'pre[class*="language-"]': {
                               ...oneDark['pre[class*="language-"]'],
                               background: "transparent",
-                              overflow: "auto", 
-                              fontSize: "0.85rem", 
+                              overflow: "auto",
+                              fontSize: "0.85rem",
                             },
                             'code[class*="language-"]': {
                               ...oneDark['code[class*="language-"]'],
@@ -279,6 +279,7 @@ const Page = () => {
                           customStyle={{
                             minWidth: "fit-content",
                             whiteSpace: "pre", 
+                            padding: 0, // <-- azzeriamo il padding qui perché lo gestiamo con p-6 sul wrapper
                           }}
                         >
                           {codeSnippet}
@@ -323,7 +324,7 @@ const Page = () => {
 
               <div className="flex flex-col justify-center lg:justify-start sm:flex-row items-center sm:items-start gap-4 mt-2">
                 <Image
-                  src="/user-2.jpg"
+                  src="/user-1.jpg"
                   className="rounded-full object-cover"
                   alt="Random user"
                   width={48}
@@ -355,7 +356,7 @@ const Page = () => {
 
               <div className="flex flex-col justify-center lg:justify-start sm:flex-row items-center sm:items-start gap-4 mt-2">
                 <Image
-                  src="/user-2.jpg"
+                  src="/user-1.jpg"
                   className="rounded-full object-cover"
                   alt="Random user"
                   width={48}
