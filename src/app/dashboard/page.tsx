@@ -47,6 +47,7 @@ const Page = async ({ searchParams }: PageProps) => {
       {success ? <PaymentSuccessModal /> : null}
 
       <DashboardPage
+        hideBackButton={true}
         cta={
           <CreateEventCategoryModal>
             <Button className="w-full sm:w-fit">

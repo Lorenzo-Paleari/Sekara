@@ -233,7 +233,7 @@ const Page = () => {
               <div className="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5" />
             </div>
 
-            {/* Quarto elemento: integrazione semplice */}
+            {/* Quarto elemento: integrazione semplice - COMMENTATO
             <div className="relative lg:row-span-2">
               <div className="absolute inset-px rounded-lg bg-white max-lg:rounded-b-[2rem] lg:rounded-r-[2rem]" />
 
@@ -248,7 +248,6 @@ const Page = () => {
                   </p>
                 </div>
 
-                {/* Box codice - FIX: inset + padding */}
                 <div className="relative min-h-[30rem] w-full grow">
                   <div className="absolute inset-6 sm:inset-8 lg:inset-10 overflow-hidden rounded-tl-xl bg-gray-900 shadow-2xl p-6">
                     <div className="flex bg-gray-800/40 ring-1 ring-white/5">
@@ -279,7 +278,7 @@ const Page = () => {
                           customStyle={{
                             minWidth: "fit-content",
                             whiteSpace: "pre", 
-                            padding: 0, // <-- azzeriamo il padding qui perché lo gestiamo con p-6 sul wrapper
+                            padding: 0,
                           }}
                         >
                           {codeSnippet}
@@ -292,6 +291,36 @@ const Page = () => {
 
               <div className="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5 max-lg:rounded-b-[2rem] lg:rounded-r-[2rem]" />
             </div>
+            */}
+
+            {/* Cool Mascotte */}
+            <div className="relative lg:row-span-2">
+              <div className="absolute inset-px rounded-lg bg-white max-lg:rounded-b-[2rem] lg:rounded-r-[2rem]" />
+
+              <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] max-lg:rounded-b-[calc(2rem+1px)] lg:rounded-r-[calc(2rem+1px)]">
+                <div className="px-8 pb-3 pt-8 sm:px-10 sm:pb-0 sm:pt-10">
+                  <p className="mt-2 text-lg/7 font-medium tracking-tight text-brand-950 max-lg:text-center">
+                    Cool Mascotte
+                  </p>
+                  <p className="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">
+                    Meet our friendly mascot that makes monitoring your SaaS a delightful experience.
+                  </p>
+                </div>
+
+                <div className="relative min-h-[30rem] w-full grow flex items-center justify-center p-8">
+                  <Image
+                    src="/Sekara_hi.png"
+                    alt="Sekara Mascot"
+                    width={300}
+                    height={300}
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+
+              <div className="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5 max-lg:rounded-b-[2rem] lg:rounded-r-[2rem]" />
+            </div>
+            
           </div>
         </MaxWidthWrapper>
       </section>

@@ -41,13 +41,15 @@ const SIDEBAR_ITEMS: SidebarCategory[] = [
   },
 ]
 
-const Sidebar = ({ onClose }: { onClose?: () => void }) => {
+const Sidebar = ({ onClose, hideLogo = false }: { onClose?: () => void; hideLogo?: boolean }) => {
   return (
     <div className="space-y-4 md:space-y-6 relative z-20 flex flex-col h-full">
       {/* logo */}
-      <p className="hidden sm:block text-lg/7 font-semibold text-brand-900">
-        Se<span className="text-brand-700">Kara</span>
-      </p>
+      {!hideLogo && (
+        <p className="hidden sm:block text-4xl/7 font-semibold text-brand-900 mb-6">
+          Se<span className="text-brand-700">Kara</span>
+        </p>
+      )}
 
       {/* navigation items */}
       <div className="flex-grow">
@@ -113,6 +115,7 @@ const Layout = ({ children }: PropsWithChildren) => {
           <button
             onClick={() => setIsDrawerOpen(true)}
             className="text-gray-500 hover:text-gray-600"
+            aria-label="Open navigation menu"
           >
             <Menu className="size-6" />
           </button>
@@ -144,7 +147,7 @@ const Layout = ({ children }: PropsWithChildren) => {
             </button>
           </div>
 
-          <Sidebar />
+          <Sidebar onClose={() => setIsDrawerOpen(false)} hideLogo={true} />
         </Modal>
       </div>
     </div>

@@ -12,15 +12,15 @@ export const Navbar = async () => {
     <nav className="sticky z-[100] h-16 inset-x-0 top-0 w-full border-b border-gray-200 bg-white/80 backdrop-blur-lg transition-all">
       <MaxWidthWrapper>
         <div className="flex h-16 items-center justify-between">
-          <Link href="/" className="flex z-40 font-semibold">
-            Se<span className="text-brand-700">Kara</span>
+          <Link href="/" className="flex z-40 font-semibold text-xl" >
+            Se<span className="text-brand-800">Kara</span>
           </Link>
 
           <div className="h-full flex items-center space-x-4">
             {user ? (
               <>
                 <SignOutButton>
-                  <Button size="sm" variant="ghost">
+                  <Button size="default" variant="ghost">
                     Sign out
                   </Button>
                 </SignOutButton>
@@ -28,7 +28,7 @@ export const Navbar = async () => {
                 <Link
                   href="/dashboard"
                   className={buttonVariants({
-                    size: "sm",
+                    size: "default",
                     className: "flex items-center gap-1",
                   })}
                 >
@@ -40,7 +40,7 @@ export const Navbar = async () => {
                 <Link
                   href="/pricing"
                   className={buttonVariants({
-                    size: "sm",
+                    size: "default",
                     variant: "ghost",
                   })}
                 >
@@ -49,7 +49,7 @@ export const Navbar = async () => {
                 <Link
                   href="/sign-in"
                   className={buttonVariants({
-                    size: "sm",
+                    size: "default",
                     variant: "ghost",
                   })}
                 >
@@ -61,7 +61,7 @@ export const Navbar = async () => {
                 <Link
                   href="/sign-up"
                   className={buttonVariants({
-                    size: "sm",
+                    size: "default",
                     className: "flex items-center gap-1.5",
                   })}
                 >
