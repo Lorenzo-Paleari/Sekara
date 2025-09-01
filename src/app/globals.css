@@ -1,37 +1,51 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
+/*
+ * Questo file contiene gli stili globali dell'applicazione.
+ * Qui usiamo Tailwind CSS, che è una libreria che ci permette di scrivere classi CSS già pronte per velocizzare lo sviluppo.
+ * Le tre righe qui sotto servono a "caricare" le basi di Tailwind:
+ */
+@tailwind base;         /* Stili di base (reset, tipografia, ecc.) */
+@tailwind components;   /* Componenti personalizzati di Tailwind */
+@tailwind utilities;    /* Tutte le utility (classi rapide) di Tailwind */
+
+
+/*
+ * Qui sotto definiamo delle "variabili CSS"
+ * :root significa che queste variabili valgono per tutto il sito.
+ *
+ * Ci sono due "temi": quello chiaro (di default) e quello scuro (quando c'è la classe .dark sul body o su html).
+ */
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 224 71.4% 4.1%;
-    --card: 0 0% 100%;
-    --card-foreground: 224 71.4% 4.1%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 224 71.4% 4.1%;
-    --primary: 220.9 39.3% 11%;
-    --primary-foreground: 210 20% 98%;
-    --secondary: 220 14.3% 95.9%;
-    --secondary-foreground: 220.9 39.3% 11%;
-    --muted: 220 14.3% 95.9%;
-    --muted-foreground: 220 8.9% 46.1%;
-    --accent: 220 14.3% 95.9%;
-    --accent-foreground: 220.9 39.3% 11%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 20% 98%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 224 71.4% 4.1%;
-    --chart-1: 12 76% 61%;
+    --background: 0 0% 100%;              /* Colore di sfondo principale (bianco) */
+    --foreground: 224 71.4% 4.1%;         /* Colore principale del testo */
+    --card: 0 0% 100%;                    /* Sfondo delle card */
+    --card-foreground: 224 71.4% 4.1%;    /* Testo sulle card */
+    --popover: 0 0% 100%;                 /* Sfondo dei popover */
+    --popover-foreground: 224 71.4% 4.1%; /* Testo nei popover */
+    --primary: 220.9 39.3% 11%;           /* Colore principale (es. bottoni) */
+    --primary-foreground: 210 20% 98%;    /* Testo sui bottoni principali */
+    --secondary: 220 14.3% 95.9%;         /* Colore secondario */
+    --secondary-foreground: 220.9 39.3% 11%; /* Testo su sfondo secondario */
+    --muted: 220 14.3% 95.9%;             /* Colore "spento" per elementi meno importanti */
+    --muted-foreground: 220 8.9% 46.1%;   /* Testo su sfondo "spento" */
+    --accent: 220 14.3% 95.9%;            /* Colore di accento */
+    --accent-foreground: 220.9 39.3% 11%; /* Testo su accento */
+    --destructive: 0 84.2% 60.2%;         /* Colore per azioni pericolose (es. elimina) */
+    --destructive-foreground: 210 20% 98%;/* Testo su bottoni pericolosi */
+    --border: 220 13% 91%;                /* Colore dei bordi */
+    --input: 220 13% 91%;                 /* Sfondo dei campi input */
+    --ring: 224 71.4% 4.1%;               /* Colore "anello" di focus */
+    --chart-1: 12 76% 61%;                /* Colori per i grafici */
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.5rem}
+    --radius: 0.5rem                      /* Raggio degli angoli arrotondati */
+  }
   .dark {
-    --background: 224 71.4% 4.1%;
-    --foreground: 210 20% 98%;
+    --background: 224 71.4% 4.1%;         /* Sfondo scuro */
+    --foreground: 210 20% 98%;            /* Testo chiaro */
     --card: 224 71.4% 4.1%;
     --card-foreground: 210 20% 98%;
     --popover: 224 71.4% 4.1%;
@@ -53,9 +67,18 @@
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%}
+    --chart-5: 340 75% 55%;
+  }
 }
 
+
+/*
+ * Qui applichiamo alcune regole di base a tutti gli elementi (*) e al body:
+ * - Tutti gli elementi avranno il bordo con il colore definito sopra (border-border)
+ * - Il body avrà lo sfondo e il testo con i colori principali scelti sopra
+ *
+ * @apply è una funzione di Tailwind che permette di "inserire" le classi direttamente nel CSS.
+ */
 @layer base {
   * {
     @apply border-border;

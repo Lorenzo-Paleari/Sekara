@@ -6,11 +6,12 @@ import { PrismaClient } from "@prisma/client"
 //evita la creazione di piu istanze
 declare global {
   var cachedPrisma: PrismaClient
+
 }
 
-  //pool: insieme di connessioni aperte al database PostgreSQL
-  //prismaNeon: adattatore Prisma-Neon
-  //prismaClient: client Prisma per interagire con il database
+//pool: insieme di connessioni aperte al database PostgreSQL
+//prismaNeon: adattatore Prisma-Neon
+//prismaClient: client Prisma per interagire con il database
 
 let prisma: PrismaClient
 if (process.env.NODE_ENV === "production") {

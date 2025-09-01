@@ -6,11 +6,11 @@ import { MockDiscordUI } from "@/components/mock-discord-ui"
 import { AnimatedList, AnimatedListItem } from "@/components/ui/animated-list"
 import { DiscordMessage } from "@/components/discord-message"
 import Image from "next/image"
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
-import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism"
+//import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
+//import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism"
 import { Icons } from "@/components/icons"
 
-// Pagina principale 
+// Questo è il componente principale della pagina "landing" (quella che vedi appena entri nel sito)
 const Page = () => {
   // Esempio di snippet di codice per mostrare l'integrazione API
   const codeSnippet = `await fetch("http://localhost:3000/api/v1/events", {

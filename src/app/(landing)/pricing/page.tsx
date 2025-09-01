@@ -1,19 +1,27 @@
+
+// Questa riga serve a dire a Next.js che questa pagina va eseguita lato client (cioè nel browser),
+// perché usa funzioni che funzionano solo lì (come gli hook di React).
 "use client"
 
 import { Heading } from "@/components/heading"
 import { MaxWidthWrapper } from "@/components/max-width-wrapper"
 import { Button } from "@/components/ui/button"
 import { client } from "@/lib/client"
-import { createCheckoutSession } from "@/lib/stripe"
+//import { createCheckoutSession } from "@/lib/stripe"
 import { useUser } from "@clerk/nextjs"
 import { useMutation } from "@tanstack/react-query"
 import { CheckIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 
+
+// Pagina prezzi.
 const Page = () => {
+  // otteniamo l'utente attualmente loggato (se c'è)
   const { user } = useUser()
+  // cambiare pagina in modo "programmato"
   const router = useRouter()
 
+  // Lista delle funzionalità incluse nell'acquisto
   const INCLUDED_FEATURES = [
     "10.000 real-time events per month",
     "10 event categories",
@@ -21,16 +29,21 @@ const Page = () => {
     "Priority support",
   ]
 
+  // Qui prepariamo la funzione che crea una sessione di pagamento 
+  // useMutation serve per gestire chiamate API che modificano dati 
   const { mutate: createCheckoutSession } = useMutation({
     mutationFn: async () => {
       const res = await client.payment.createCheckoutSession.$post()
       return await res.json()
     },
     onSuccess: ({ url }) => {
+      // Se la chiamata va a buon fine e riceviamo un URL, portiamo l'utente su quella pagina
       if (url) router.push(url)
     },
   })
 
+  // Funzione che viene chiamata quando l'utente clicca su "Get Sekara"
+  // Se l'utente è loggato, parte il checkout. Se no, lo mandiamo alla pagina di login.
   const handleGetAccess = () => {
     if (user) {
       createCheckoutSession()
@@ -39,9 +52,11 @@ const Page = () => {
     }
   }
 
+  // struttura della pagina, JSX 
   return (
     <div className="bg-brand-25 py-24 sm:py-32">
       <MaxWidthWrapper>
+        {/* Titolo e descrizione */}
         <div className="mx-auto max-w-2xl sm:text-center">
           <Heading className="text-center">Simple no-tricks pricing</Heading>
           <p className="mt-6 text-base/7 text-gray-600 max-w-prose text-center text-pretty">
@@ -50,7 +65,9 @@ const Page = () => {
           </p>
         </div>
 
+        {/* Box con dettagli prezzo e funzionalità */}
         <div className="bg-white mx-auto mt-16 max-w-2xl rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
+          {/* Colonna con le funzionalità incluse */}
           <div className="p-8 sm:p-10 lg:flex-auto">
             <h3 className="text-3xl font-heading font-semibold tracking-tight text-gray-900">
               Lifetime access
@@ -68,6 +85,7 @@ const Page = () => {
               <div className="h-px flex-auto bg-gray-100" />
             </div>
 
+            {/* Lista delle funzionalità incluse */}
             <ul className="mt-8 grid grid-cols-1 gap-4 text-sm/6 text-gray-600 sm:grid-cols-2 sm:gap-6">
               {INCLUDED_FEATURES.map((feature) => (
                 <li key={feature} className="flex gap-3">
@@ -78,6 +96,7 @@ const Page = () => {
             </ul>
           </div>
 
+          {/* Colonna con il prezzo e il bottone di acquisto */}
           <div className="-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0">
             <div className="rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16">
               <div className="mx-auto max-w-xs py-8">
@@ -93,6 +112,7 @@ const Page = () => {
                   </span>
                 </p>
 
+                {/* Bottone per acquistare o accedere */}
                 <Button onClick={handleGetAccess} className="mt-6 px-20">
                   Get Sekara
                 </Button>

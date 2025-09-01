@@ -35,16 +35,6 @@ Informazioni developer:
                 })
                 }).then(r => r.text()).then(console.log)
 
-
-informazioni per me:
-    @ per l'absolute path
-    Next.js fa server side rendering e routing
-
-    const Page = () => ... //crea l'oggetto React
-    export default Page  //dichiari che quando importi questo file, stai importando l'oggetto Page
-
-    f({ x , y , z }) : passa come parametro l'oggetto (x,y,z) {}: definisce un singolo oggetto
-
 Cose da fare:
 
     deploy dell'app poi generare webhook con stripe e metterlo in .env
@@ -70,3 +60,25 @@ Cose da fare:
             compression: 'brotli', // o 'gzip'
             maxMemoryGenerations: 1, // riduci la memoria usata
             }
+
+
+informazioni per me:
+    @ per l'absolute path
+    Next.js fa server side rendering e routing
+
+    Le funzioni si definiscono con 'function' o con le arrow function: () => { ... }
+
+    const Page = () => ... //crea l'oggetto React
+    export default Page  //dichiari che quando importi questo file, stai importando l'oggetto Page
+
+    f({ x , y , z }) : passa come parametro l'oggetto (x,y,z) {}: definisce un singolo oggetto
+
+    la funzione prende qualsiasi numero di argomenti di tipo ClassValue
+    export function cn(...inputs: ClassValue[])
+
+    // 'let' crea una variabile che può cambiare valore.
+    // 'process.env.PROVA' legge le configuraziona PROVA messa nel .env
+    // 'export const db = prisma' esporta l'oggetto per usarlo in altri file.
+
+    // 'export' rende la variabile accessibile da altri file.
+    // 'const' crea una costante che non può essere modificata. 
