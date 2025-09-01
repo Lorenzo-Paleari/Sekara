@@ -1,18 +1,22 @@
+
+// pagina welcome, qui aspettiamo che l'account sia pronto
 "use client"
 
-// per sincronizzare gli utenti con il DB
 
-import { Heading } from "@/components/heading"
-import { LoadingSpinner } from "@/components/loading-spinner"
-import { client } from "@/lib/client"
-import { useQuery } from "@tanstack/react-query"
-import { LucideProps } from "lucide-react"
-import { useRouter } from "next/navigation"
-import { useEffect } from "react"
+import { Heading } from "@/components/heading" // titolo grande
+import { LoadingSpinner } from "@/components/loading-spinner" // spinner di caricamento
+import { client } from "@/lib/client" // chiamate API
+import { useQuery } from "@tanstack/react-query" // per gestire dati che arrivano da API
+import { LucideProps } from "lucide-react" // tipo per le icone SVG
+import { useRouter } from "next/navigation" // per cambiare pagina
+import { useEffect } from "react" // effetto collaterale quando cambiano i dati
 
+
+// pagina welcome
 const Page = () => {
-  const router = useRouter()
+  const router = useRouter() // per cambiare pagina
 
+  // controlliamo se l'account è stato creato e sincronizzato
   const { data } = useQuery({
     queryFn: async () => {
       const res = await client.auth.getDatabaseSyncStatus.$get()
@@ -20,19 +24,23 @@ const Page = () => {
     },
     queryKey: ["get-database-sync-status"],
     refetchInterval: (query) => {
-      return query.state.data?.isSynced ? false : 1000
+      return query.state.data?.isSynced ? false : 1000 // aggiorna ogni secondo finché non è pronto
     },
   })
 
+  // appena l'account è pronto, mandiamo l'utente in dashboard
   useEffect(() => {
     if (data?.isSynced) router.push("/dashboard")
   }, [data, router])
 
+  // questa pagina di attesa ha un loader e un messaggio
   return (
     <div className="flex w-full flex-1 items-center justify-center px-4">
       <BackgroundPattern className="absolute inset-0 left-1/2 z-0 -translate-x-1/2 opacity-75" />
 
       <div className="relative z-10 flex flex-col items-center gap-6 text-center">
+        {/* mascotte sekara */}
+        <img src="/SekaraWhitMascotte.png" alt="Sekara Mascotte" className="w-32 h-32 mb-2" />
         <LoadingSpinner size="md" />
         <Heading>Creating your account...</Heading>
         <p className="text-base/7 text-gray-600 max-w-prose">
@@ -43,6 +51,8 @@ const Page = () => {
   )
 }
 
+
+// sfondo a griglia
 const BackgroundPattern = (props: LucideProps) => {
   return (
     <svg
@@ -53,6 +63,7 @@ const BackgroundPattern = (props: LucideProps) => {
       xmlns="http://www.w3.org/2000/svg"
       className={props.className}
     >
+      {/* ...svg con linee di griglia... */}
       <mask
         id="mask0_5036_374506"
         style={{ maskType: "alpha" }}
@@ -142,4 +153,4 @@ const BackgroundPattern = (props: LucideProps) => {
   )
 }
 
-export default Page
+export default Page // esportiamo la pagina

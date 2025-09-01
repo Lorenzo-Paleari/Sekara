@@ -1,10 +1,13 @@
-import { FREE_QUOTA, PRO_QUOTA } from "@/config"
-import { db } from "@/db"
-import { DiscordClient } from "@/lib/discord-client"
-import { CATEGORY_NAME_VALIDATOR } from "@/lib/validators/category-validator"
-import { NextRequest, NextResponse } from "next/server"
-import { z } from "zod"
 
+import { FREE_QUOTA, PRO_QUOTA } from "@/config" // limiti eventi
+import { db } from "@/db" // db
+import { DiscordClient } from "@/lib/discord-client" // bot discord
+import { CATEGORY_NAME_VALIDATOR } from "@/lib/validators/category-validator" // validatore nome categoria
+import { NextRequest, NextResponse } from "next/server" // request/response next
+import { z } from "zod" // validazione dati
+
+
+// validiamo i dati in arrivo
 const REQUEST_VALIDATOR = z
   .object({
     category: CATEGORY_NAME_VALIDATOR,
@@ -13,8 +16,11 @@ const REQUEST_VALIDATOR = z
   })
   .strict()
 
+
+// endpoint eventi
 export const POST = async (req: NextRequest) => {
   try {
+    //API key
     const authHeader = req.headers.get("Authorization")
 
     if (!authHeader) {
@@ -30,12 +36,13 @@ export const POST = async (req: NextRequest) => {
       )
     }
 
-    const apiKey = authHeader.split(" ")[1]
+    const apiKey = authHeader.split(" ")[1] // estraiamo api key
 
     if (!apiKey || apiKey.trim() === "") {
       return NextResponse.json({ message: "Invalid API key" }, { status: 401 })
     }
 
+    // cerchiamo l'utente con questa api key nel DB
     const user = await db.user.findUnique({
       where: { apiKey },
       include: { EventCategories: true },
@@ -54,7 +61,8 @@ export const POST = async (req: NextRequest) => {
       )
     }
 
-    // ACTUAL LOGIC
+    // quota mensile
+    //prende date
     const currentData = new Date()
     const currentMonth = currentData.getMonth() + 1
     const currentYear = currentData.getFullYear()
@@ -82,12 +90,15 @@ export const POST = async (req: NextRequest) => {
       )
     }
 
+    // bot discord
     const discord = new DiscordClient(process.env.DISCORD_BOT_TOKEN)
 
+    // canale DM
     const dmChannel = await discord.createDM(user.discordId)
 
     let requestData: unknown
 
+    // leggiamo il body della richiesta
     try {
       requestData = await req.json()
     } catch (err) {
@@ -99,8 +110,10 @@ export const POST = async (req: NextRequest) => {
       )
     }
 
+    // validiamo i dati
     const validationResult = REQUEST_VALIDATOR.parse(requestData)
 
+    // cerchiamo la categoria
     const category = user.EventCategories.find(
       (cat) => cat.name === validationResult.category
     )
@@ -114,6 +127,7 @@ export const POST = async (req: NextRequest) => {
       )
     }
 
+    // prepariamo i dati per il messaggio discord
     const eventData = {
       title: `${category.emoji || "🔔"} ${
         category.name.charAt(0).toUpperCase() + category.name.slice(1)
@@ -134,6 +148,7 @@ export const POST = async (req: NextRequest) => {
       ),
     }
 
+    // salviamo l'evento nel db
     const event = await db.event.create({
       data: {
         name: category.name,
@@ -145,13 +160,16 @@ export const POST = async (req: NextRequest) => {
     })
 
     try {
+      // inviamo il messaggio su discord
       await discord.sendEmbed(dmChannel.id, eventData)
 
+      // aggiorniamo lo stato di consegna
       await db.event.update({
         where: { id: event.id },
         data: { deliveryStatus: "DELIVERED" },
       })
 
+      // aggiorniamo la quota
       await db.quota.upsert({
         where: { userId: user.id, month: currentMonth, year: currentYear },
         update: { count: { increment: 1 } },
@@ -163,6 +181,7 @@ export const POST = async (req: NextRequest) => {
         },
       })
     } catch (err) {
+      // errore invio discord
       await db.event.update({
         where: { id: event.id },
         data: { deliveryStatus: "FAILED" },
@@ -179,6 +198,7 @@ export const POST = async (req: NextRequest) => {
       )
     }
 
+    // tutto ok
     return NextResponse.json({
       message: "Event processed successfully",
       eventId: event.id,

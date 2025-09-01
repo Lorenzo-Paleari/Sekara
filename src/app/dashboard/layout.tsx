@@ -1,24 +1,27 @@
-"use client"
+"use client" // componente client side
 
-import { buttonVariants } from "@/components/ui/button"
-import { Modal } from "@/components/ui/modal"
-import { cn } from "@/utils"
-import { UserButton } from "@clerk/nextjs"
-import { Gem, Home, Key, LucideIcon, Menu, Settings, X } from "lucide-react"
-import Link from "next/link"
-import { PropsWithChildren, useState } from "react"
+import { buttonVariants } from "@/components/ui/button" // bottoni
+import { Modal } from "@/components/ui/modal" // modale
+import { cn } from "@/utils" // utilità classi
+import { UserButton } from "@clerk/nextjs" // user menu
+import { Gem, Home, Key, LucideIcon, Menu, Settings, X } from "lucide-react" // icone
+import Link from "next/link" // link nextjs
+import { PropsWithChildren, useState } from "react" // props e stato
 
+// tipizzazione item sidebar
 interface SidebarItem {
   href: string
   icon: LucideIcon
   text: string
 }
 
+// tipizzazione categoria sidebar
 interface SidebarCategory {
   category: string
   items: SidebarItem[]
 }
 
+// voci sidebar
 const SIDEBAR_ITEMS: SidebarCategory[] = [
   {
     category: "Overview",
@@ -41,17 +44,19 @@ const SIDEBAR_ITEMS: SidebarCategory[] = [
   },
 ]
 
+
+// sidebar con logo, menu e user button
 const Sidebar = ({ onClose, hideLogo = false }: { onClose?: () => void; hideLogo?: boolean }) => {
   return (
     <div className="space-y-4 md:space-y-6 relative z-20 flex flex-col h-full">
-      {/* logo */}
+      {/* logo sekara */}
       {!hideLogo && (
         <p className="hidden sm:block text-4xl/7 font-semibold text-brand-900 mb-6">
           Se<span className="text-brand-700">Kara</span>
         </p>
       )}
 
-      {/* navigation items */}
+      {/* voci menu */}
       <div className="flex-grow">
         <ul>
           {SIDEBAR_ITEMS.map(({ category, items }) => (
@@ -80,6 +85,7 @@ const Sidebar = ({ onClose, hideLogo = false }: { onClose?: () => void; hideLogo
         </ul>
       </div>
 
+      {/* user button in fondo */}
       <div className="flex flex-col">
         <hr className="my-4 md:my-6 w-full h-px bg-gray-100" />
 
@@ -96,18 +102,20 @@ const Sidebar = ({ onClose, hideLogo = false }: { onClose?: () => void; hideLogo
   )
 }
 
+
+// layout dashboard con sidebar e mobile drawer
 const Layout = ({ children }: PropsWithChildren) => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false) // stato drawer mobile
 
   return (
     <div className="relative h-screen flex flex-col md:flex-row bg-white overflow-hidden">
-      {/* sidebar for desktop */}
+      {/* sidebar desktop */}
       <div className="hidden md:block w-64 lg:w-80 border-r border-gray-100 p-6 h-full text-brand-900 relative z-10">
         <Sidebar />
       </div>
 
       <div className="flex-1 flex flex-col overflow-hidden">
-        {/* mobile header */}
+        {/* header mobile con menu */}
         <div className="md:hidden flex items-center justify-between p-4 border-b border-gray-200">
           <p className="text-lg/7 font-semibold text-brand-900">
             Se<span className="text-brand-700">Kara</span>
@@ -121,7 +129,7 @@ const Layout = ({ children }: PropsWithChildren) => {
           </button>
         </div>
 
-        {/* main content area */}
+        {/* contenuto principale */}
         <div className="flex-1 overflow-y-auto bg-gray-50 shadow-md p-4 md:p-6 relative z-10">
           <div className="relative min-h-full flex flex-col">
             <div className="h-full flex flex-col flex-1 space-y-4">
@@ -130,6 +138,7 @@ const Layout = ({ children }: PropsWithChildren) => {
           </div>
         </div>
 
+        {/* drawer mobile con sidebar */}
         <Modal
           className="p-4"
           showModal={isDrawerOpen}

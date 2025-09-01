@@ -1,15 +1,18 @@
+
+// pagina categoria eventi
 "use client"
 
-import { Event, EventCategory } from "@prisma/client"
-import { useQuery } from "@tanstack/react-query"
-import { EmptyCategoryState } from "./empty-category-state"
-import { useEffect, useMemo, useState } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
-import { client } from "@/lib/client"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Card } from "@/components/ui/card"
-import { ArrowUpDown, BarChart } from "lucide-react"
-import { isAfter, isToday, startOfMonth, startOfWeek } from "date-fns"
+
+import { Event, EventCategory } from "@prisma/client" // tipi evento
+import { useQuery } from "@tanstack/react-query" // query api
+import { EmptyCategoryState } from "./empty-category-state" // stato vuoto
+import { useEffect, useMemo, useState } from "react" // hook react
+import { useRouter, useSearchParams } from "next/navigation" // router e parametri
+import { client } from "@/lib/client" // api
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs" // tabs
+import { Card } from "@/components/ui/card" // card
+import { ArrowUpDown, BarChart } from "lucide-react" // icone
+import { isAfter, isToday, startOfMonth, startOfWeek } from "date-fns" // date
 
 import {
   ColumnDef,
@@ -46,24 +49,33 @@ export const CategoryPageContent = ({
 }: CategoryPageContentProps) => {
   const searchParams = useSearchParams()
 
+
+  // tab attivo (oggi, settimana, mese)
   const [activeTab, setActiveTab] = useState<"today" | "week" | "month">(
     "today"
   )
 
   // https://localhost:3000/dashboard/category/sale?page=5&limit=30
+
+  // paginazione
   const page = parseInt(searchParams.get("page") || "1", 10)
   const limit = parseInt(searchParams.get("limit") || "30", 10)
+
 
   const [pagination, setPagination] = useState({
     pageIndex: page - 1,
     pageSize: limit,
   })
 
+
+  // polling per vedere se ci sono eventi
   const { data: pollingData } = useQuery({
     queryKey: ["category", category.name, "hasEvents"],
     initialData: { hasEvents: initialHasEvents },
   })
 
+
+  // query eventi per categoria
   const { data, isFetching } = useQuery({
     queryKey: [
       "events",
@@ -86,6 +98,7 @@ export const CategoryPageContent = ({
     enabled: pollingData.hasEvents,
   })
 
+  // colonne tabella eventi
   const columns: ColumnDef<Event>[] = useMemo(
     () => [
       {
@@ -144,9 +157,12 @@ export const CategoryPageContent = ({
     [category.name, data?.events]
   )
 
+
+  // stato ordinamento e filtri
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 
+  // tabella eventi
   const table = useReactTable({
     data: data?.events || [],
     columns,
@@ -166,7 +182,8 @@ export const CategoryPageContent = ({
     },
   })
 
-   //Update URL when pagination changes
+
+  // aggiorna la url quando cambia la pagina
   const router = useRouter()
 
   useEffect(() => {
@@ -176,6 +193,7 @@ export const CategoryPageContent = ({
     router.push(`?${searchParams.toString()}`, { scroll: false })
   }, [pagination, router])
 
+  // somma dei campi numerici
   const numericFieldSums = useMemo(() => {
     if (!data?.events || data.events.length === 0) return {}
 
@@ -228,6 +246,7 @@ export const CategoryPageContent = ({
     return sums
   }, [data?.events])
 
+  // card con le somme dei campi numerici
   const NumericFieldSumCards = () => {
     if (Object.keys(numericFieldSums).length === 0) return null
 
@@ -263,10 +282,13 @@ export const CategoryPageContent = ({
     })
   }
 
+
+  // se non ci sono eventi, stato vuoto
   if (!pollingData.hasEvents) {
     return <EmptyCategoryState categoryName={category.name} />
   }
 
+  // layout pagina categoria eventi
   return (
     <div className="space-y-6">
       <Tabs

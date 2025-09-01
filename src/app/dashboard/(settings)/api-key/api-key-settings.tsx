@@ -1,21 +1,26 @@
+
+// pagina impostazioni API key
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { CheckIcon, ClipboardIcon } from "lucide-react"
-import { useState } from "react"
+import { Button } from "@/components/ui/button" // bottone
+import { Card } from "@/components/ui/card" // box grafico
+import { Input } from "@/components/ui/input" // campo input
+import { Label } from "@/components/ui/label" // etichetta
+import { CheckIcon, ClipboardIcon } from "lucide-react" // icone
+import { useState } from "react" // stato locale
+
 
 export const ApiKeySettings = ({ apiKey }: { apiKey: string }) => {
-  const [copySuccess, setCopySuccess] = useState(false)
+  const [copySuccess, setCopySuccess] = useState(false) // stato per feedback copia
 
+  // funzione per copiare la chiave
   const copyApiKey = () => {
     navigator.clipboard.writeText(apiKey)
     setCopySuccess(true)
     setTimeout(() => setCopySuccess(false), 2000)
   }
 
+  // layout impostazioni api key
   return (
     <Card className="max-w-xl w-full">
       <div>
@@ -37,6 +42,7 @@ export const ApiKeySettings = ({ apiKey }: { apiKey: string }) => {
           </div>
         </div>
 
+        {/* avviso di sicurezza */}
         <p className="mt-2 text-sm/6 text-gray-600">
           Keep your key secret and do not share it with others.
         </p>

@@ -1,18 +1,20 @@
-import { Card } from "@/components/ui/card"
-import { client } from "@/lib/client"
-import { useQuery } from "@tanstack/react-query"
-import { useRouter } from "next/navigation"
-import { useEffect } from "react"
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
-import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism"
+import { Card } from "@/components/ui/card" // card
+import { client } from "@/lib/client" // api
+import { useQuery } from "@tanstack/react-query" // query
+import { useRouter } from "next/navigation" // router
+import { useEffect } from "react" // effetto
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter" // evidenzia codice
+import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism" // tema codice
+
 
 export const EmptyCategoryState = ({
   categoryName,
 }: {
   categoryName: string
 }) => {
-  const router = useRouter()
+  const router = useRouter() // router
 
+  // polling per vedere se arrivano eventi
   const { data } = useQuery({
     queryKey: ["category", categoryName, "hasEvents"],
     queryFn: async () => {
@@ -29,10 +31,12 @@ export const EmptyCategoryState = ({
 
   const hasEvents = data?.hasEvents
 
+  // aggiorna la pagina se arrivano eventi
   useEffect(() => {
     if (hasEvents) router.refresh()
   }, [hasEvents, router])
 
+  // snippet esempio per invio evento
   const codeSnippet = `await fetch('http://sekara.vercel.app/api/events', {
   method: 'POST',
   headers: {
@@ -47,6 +51,7 @@ export const EmptyCategoryState = ({
   })
 })`
 
+  // layout stato vuoto categoria
   return (
     <Card
       contentClassName="max-w-2xl w-full flex flex-col items-center p-6"
@@ -93,6 +98,7 @@ export const EmptyCategoryState = ({
           </span>
         </div>
 
+        {/* link documentazione e supporto */}
         <p className="text-sm/6 text-gray-600 mt-2">
           Need help? Check out our{" "}
           <a href="#" className="text-blue-600 hover:underline">

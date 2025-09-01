@@ -1,16 +1,20 @@
+
+// pagina upgrade piano
 "use client"
 
-import { Card } from "@/components/ui/card"
-import { client } from "@/lib/client"
-import { Plan } from "@prisma/client"
-import { useMutation, useQuery } from "@tanstack/react-query"
-import { format } from "date-fns"
-import { BarChart } from "lucide-react"
-import { useRouter } from "next/navigation"
+import { Card } from "@/components/ui/card" // card grafica
+import { client } from "@/lib/client" // chiamate API
+import { Plan } from "@prisma/client" // tipo piano
+import { useMutation, useQuery } from "@tanstack/react-query" // api e mutazioni
+import { format } from "date-fns" // formattare date
+import { BarChart } from "lucide-react" // icona grafico
+import { useRouter } from "next/navigation" // cambiare pagina
+
 
 export const UpgradePageContent = ({ plan }: { plan: Plan }) => {
-  const router = useRouter()
+  const router = useRouter() // cambiare pagina
 
+  // funzione per avviare il checkout
   const { mutate: createCheckoutSession } = useMutation({
     mutationFn: async () => {
       const res = await client.payment.createCheckoutSession.$post()
@@ -21,6 +25,7 @@ export const UpgradePageContent = ({ plan }: { plan: Plan }) => {
     },
   })
 
+  // dati di utilizzo (eventi e categorie)
   const { data: usageData } = useQuery({
     queryKey: ["usage"],
     queryFn: async () => {
@@ -29,6 +34,7 @@ export const UpgradePageContent = ({ plan }: { plan: Plan }) => {
     },
   })
 
+  // layout pagina upgrade
   return (
     <div className="max-w-3xl flex flex-col gap-8">
       <div>
@@ -42,6 +48,7 @@ export const UpgradePageContent = ({ plan }: { plan: Plan }) => {
         </p>
       </div>
 
+      {/* box eventi e categorie */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Card className="border-2 border-brand-700">
           <div className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -52,7 +59,7 @@ export const UpgradePageContent = ({ plan }: { plan: Plan }) => {
           <div>
             <p className="text-2xl font-bold">
               {usageData?.eventsUsed || 0} of{" "}
-              {usageData?.eventsLimit.toLocaleString() || 100}
+              {usageData?.eventsLimit?.toLocaleString() || 100}
             </p>
             <p className="text-xs/5 text-muted-foreground">
               Events this period
@@ -68,13 +75,14 @@ export const UpgradePageContent = ({ plan }: { plan: Plan }) => {
           <div>
             <p className="text-2xl font-bold">
               {usageData?.categoriesUsed || 0} of{" "}
-              {usageData?.categoriesLimit.toLocaleString() || 10}
+              {usageData?.categoriesLimit?.toLocaleString() || 10}
             </p>
             <p className="text-xs/5 text-muted-foreground">Active categories</p>
           </div>
         </Card>
       </div>
 
+      {/* reset e upgrade */}
       <p className="text-sm text-gray-500">
         Usage will reset{" "}
         {usageData?.resetDate ? (
